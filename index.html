@@ -256,9 +256,22 @@
       }
 
       footer {
-        opacity: 0.7;
+        opacity: 0.8;
         text-align: center;
         padding: 28px 0 36px;
+      }
+
+      footer .social {
+        margin-top: 12px;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+
+      footer .social .btn {
+        font-size: 14px;
+        padding: 8px 12px;
       }
 
       @keyframes fadeInUp {
@@ -283,6 +296,28 @@
           font-size: 22px;
         }
       }
+      .btn svg {
+        width: 18px;
+        height: 18px;
+        vertical-align: -3px;
+      }
+      .btn .label {
+        display: inline-block;
+      }
+      @media (max-width: 480px) {
+        .btn .label {
+          display: none;
+        }
+      }
+      .old-link {
+        font-size: 0.8em;
+        color: #6c757d;
+        text-decoration: none;
+      }
+      .old-link:hover {
+        text-decoration: underline;
+        color: #495057;
+      }
     </style>
   </head>
   <body>
@@ -291,14 +326,6 @@
         <div class="brand">
           <div class="logo">🧪</div>
           <span>TANA Playground</span>
-        </div>
-        <div class="actions">
-          <a
-            class="btn secondary"
-            href="https://github.com/TANANIS/"
-            id="btn-about"
-            >GitHub</a
-          >
         </div>
       </div>
     </header>
@@ -323,7 +350,54 @@
       <section class="grid" id="grid" aria-live="polite"></section>
 
       <footer>
-        <small>Last build: <span id="buildTime"></span></small>
+        <small>
+          Last build: <span id="buildTime"></span> ·
+          <a
+            href="https://tananis.github.io/"
+            class="old-link"
+            target="_blank"
+            rel="noopener"
+            >2024 舊版網站</a
+          >
+        </small>
+
+        <div class="social">
+          <!-- GitHub -->
+          <a
+            class="btn secondary"
+            href="https://github.com/TANANIS"
+            target="_blank"
+            rel="noopener"
+            aria-label="前往 GitHub"
+          >
+            <svg viewBox="0 0 16 16"><path fill="currentColor" d="..." /></svg>
+            <span class="label">GitHub</span>
+          </a>
+
+          <!-- X -->
+          <a
+            class="btn secondary"
+            href="https://x.com/LIANG_TANA"
+            target="_blank"
+            rel="noopener"
+            aria-label="前往 X（Twitter）"
+          >
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="..." /></svg>
+            <span class="label">X</span>
+          </a>
+
+          <!-- Pixiv -->
+          <a
+            class="btn secondary"
+            href="https://www.pixiv.net/users/19414207"
+            target="_blank"
+            rel="noopener"
+            aria-label="前往 Pixiv"
+          >
+            <svg viewBox="0 0 24 24"><path fill="currentColor" d="..." /></svg>
+            <span class="label">Pixiv</span>
+          </a>
+        </div>
       </footer>
     </main>
 
