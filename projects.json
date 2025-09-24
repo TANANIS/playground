@@ -15,7 +15,7 @@
       "updated_at": "2025-09-24",
       "featured": true,
       "type": "page",
-      "thumb": "/assets/thumbs/inaff.jpg"
+      "thumb": "./assets/thumbs/inaff.jpg"
     },
     {
       "id": "sf6-trainer",
@@ -30,6 +30,21 @@
       "updated_at": "2025-09-12",
       "featured": false,
       "type": "page"
+    },
+        {
+      "id": "inake",
+      "title": "ina貪吃蛇",
+      "description": "練習Unity的小遊戲",
+      "url": "https://tananis.itch.io/inake",
+      "repo": "",
+      "tags": ["遊戲"],
+      "tech": ["C#", "Unity", "JS"],
+      "status": "published",
+      "created_at": "2024-06-15",
+      "updated_at": "2024-06-15",
+      "featured": false,
+      "type": "exe",
+      "thumb": "./assets/thumbs/inake.webp"
     }
   ]
 }
