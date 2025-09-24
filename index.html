@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>TANA Playground</title>
+    <meta
+      name="description"
+      content="TANA 的小實驗主頁：笑話頁、快打練習與各式網頁小工具。"
+    />
+    <link
+      rel="icon"
+      href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='0.9em' font-size='90'%3E🧪%3C/text%3E%3C/svg%3E"
+    />
+    <style>
+      :root {
+        --brand: #007bff;
+        --bg: #f0f8ff;
+        --ink: #212529;
+        --muted: #6c757d;
+        --card: #ffffff;
+        --shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        --ring: 0 0 0 3px rgba(0, 123, 255, 0.25);
+      }
+      * {
+        box-sizing: border-box;
+      }
+      html,
+      body {
+        height: 100%;
+      }
+      body {
+        margin: 0;
+        font: 16px/1.8 system-ui, -apple-system, Segoe UI, Roboto, Helvetica,
+          Arial;
+        color: var(--ink);
+        background: var(--bg);
+      }
+      a {
+        color: var(--brand);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
+      }
+      .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 24px;
+      }
+      header {
+        position: sticky;
+        top: 0;
+        backdrop-filter: saturate(180%) blur(6px);
+        background: rgba(240, 248, 255, 0.8);
+        border-bottom: 1px solid #e9ecef;
+        z-index: 10;
+      }
+      .nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 16px;
+        padding: 12px 0;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 800;
+        letter-spacing: 0.3px;
+      }
+      .brand .logo {
+        width: 36px;
+        height: 36px;
+        display: grid;
+        place-items: center;
+        border-radius: 12px;
+        background: var(--card);
+        box-shadow: var(--shadow);
+      }
+      .actions {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+      }
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 14px;
+        border-radius: 12px;
+        background: var(--brand);
+        color: #fff;
+        border: 0;
+        cursor: pointer;
+        box-shadow: var(--shadow);
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+      .btn:hover {
+        transform: translateY(-2px);
+      }
+      .btn.secondary {
+        background: #e9f2ff;
+        color: var(--brand);
+      }
+
+      .hero {
+        display: grid;
+        gap: 14px;
+        padding: 24px 0 6px;
+      }
+      .hero h1 {
+        margin: 0;
+        font-size: 28px;
+      }
+      .hero p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      .toolbar {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
+        margin: 16px 0;
+      }
+      .input,
+      select {
+        height: 40px;
+        padding: 0 12px;
+        border: 1px solid #dfe3e6;
+        border-radius: 12px;
+        background: #fff;
+        outline: none;
+      }
+      .input:focus,
+      select:focus {
+        box-shadow: var(--ring);
+        border-color: transparent;
+      }
+      .chips {
+        display: flex;
+        gap: 8px;
+        flex-wrap: wrap;
+      }
+      .chip {
+        padding: 6px 10px;
+        border-radius: 999px;
+        background: #fff;
+        border: 1px solid #dfe3e6;
+        cursor: pointer;
+      }
+      .chip.active {
+        background: #e9f2ff;
+        color: var(--brand);
+        border-color: transparent;
+      }
+
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 16px;
+      }
+      .card {
+        background: var(--card);
+        border-radius: 18px;
+        box-shadow: var(--shadow);
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+      .card:hover {
+        transform: translateY(-6px);
+      }
+      .thumb {
+        aspect-ratio: 16/9;
+        width: 100%;
+        object-fit: cover;
+        display: block;
+        background: #eef3f7;
+      }
+
+      .thumb.text {
+        display: grid;
+        place-items: center;
+        aspect-ratio: 16/9;
+        width: 100%;
+        font-weight: 800;
+        letter-spacing: 0.5px;
+        color: #0b1220;
+        filter: saturate(1.1);
+      }
+      .thumb.text span {
+        font-size: 28px;
+        opacity: 0.9;
+        mix-blend-mode: multiply;
+      }
+      .card-body {
+        padding: 14px;
+      }
+      .title {
+        font-size: 18px;
+        font-weight: 700;
+        margin: 0 0 6px;
+      }
+      .desc {
+        color: var(--muted);
+        margin: 0 0 10px;
+        min-height: 3.2em;
+      }
+      .meta {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        flex-wrap: wrap;
+        font-size: 12px;
+        color: #6b7280;
+      }
+      .tags {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+      }
+      .tag {
+        font-size: 12px;
+        padding: 4px 8px;
+        background: #f5f5f5;
+        border-radius: 999px;
+      }
+      .badge {
+        font-size: 12px;
+        padding: 4px 8px;
+        background: #fff3cd;
+        color: #8a6d3b;
+        border-radius: 8px;
+      }
+      .card-foot {
+        display: flex;
+        gap: 8px;
+        padding: 14px;
+        padding-top: 0;
+      }
+      .link {
+        flex: 1;
+        text-align: center;
+        background: #f5faff;
+        border: 1px solid #e3f0ff;
+        border-radius: 12px;
+        padding: 10px;
+        font-weight: 600;
+      }
+      .link:hover {
+        background: #e9f2ff;
+      }
+
+      footer {
+        opacity: 0.7;
+        text-align: center;
+        padding: 28px 0 36px;
+      }
+
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(10px);
+        }
+        to {
+          opacity: 1;
+          transform: none;
+        }
+      }
+      .card {
+        animation: fadeInUp 0.25s ease both;
+      }
+
+      @media (max-width: 480px) {
+        .brand span {
+          display: none;
+        }
+        .hero h1 {
+          font-size: 22px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <div class="brand">
+          <div class="logo">🧪</div>
+          <span>TANA Playground</span>
+        </div>
+        <div class="actions">
+          <a
+            class="btn secondary"
+            href="https://github.com/TANANIS/"
+            id="btn-about"
+            >GitHub</a
+          >
+        </div>
+      </div>
+    </header>
+
+    <main class="container">
+      <section class="hero">
+        <h1>TANA實驗主頁</h1>
+        <p>把小作品整理在這裡</p>
+      </section>
+
+      <section class="toolbar">
+        <input class="input" id="q" placeholder="搜尋標題/說明/標籤…" />
+        <select id="sort">
+          <option value="updated_desc">更新時間（新→舊）</option>
+          <option value="updated_asc">更新時間（舊→新）</option>
+          <option value="title_asc">標題（A→Z）</option>
+          <option value="title_desc">標題（Z→A）</option>
+        </select>
+        <div class="chips" id="chipbar"></div>
+      </section>
+
+      <section class="grid" id="grid" aria-live="polite"></section>
+
+      <footer>
+        <small>Last build: <span id="buildTime"></span></small>
+      </footer>
+    </main>
+
+    <script>
+      const $ = (q) => document.querySelector(q);
+      const grid = $("#grid");
+      const q = $("#q");
+      const sort = $("#sort");
+      const chipbar = $("#chipbar");
+      const buildTime = $("#buildTime");
+
+      let RAW = { version: "1", generated_at: "", projects: [] };
+      let TAGS = new Set();
+      let activeTag = null;
+
+      function hashCode(str) {
+        let h = 0;
+        for (let i = 0; i < str.length; i++) {
+          h = (h << 5) - h + str.charCodeAt(i);
+          h |= 0;
+        }
+        return Math.abs(h);
+      }
+      function gradientFrom(seed) {
+        const h1 = hashCode(seed || "seed") % 360;
+        const h2 = (h1 + 40) % 360;
+        return `linear-gradient(135deg, hsl(${h1} 85% 82%), hsl(${h2} 85% 72%))`;
+      }
+      function initialsFrom(title) {
+        const t = (title || "").trim();
+        if (!t) return "★";
+        return Array.from(t)
+          .filter((c) => !/\s/.test(c))
+          .slice(0, 2)
+          .join("");
+      }
+      function fmtDate(s) {
+        if (!s) return "";
+        return new Date(s).toISOString().slice(0, 10);
+      }
+
+      async function loadProjects() {
+        try {
+          const res = await fetch("projects.json", { cache: "no-store" });
+          if (!res.ok) throw new Error("no external");
+          RAW = await res.json();
+        } catch (err) {
+          RAW = {
+            version: "1",
+            generated_at: new Date().toISOString(),
+            projects: [],
+          };
+        }
+        buildTime.textContent = new Date().toLocaleString();
+        collectTags();
+        renderChips();
+        render();
+      }
+
+      function collectTags() {
+        TAGS = new Set();
+        RAW.projects.forEach((p) => (p.tags || []).forEach((t) => TAGS.add(t)));
+      }
+
+      function renderChips() {
+        chipbar.innerHTML = "";
+        const all = document.createElement("button");
+        all.className = "chip" + (activeTag ? "" : " active");
+        all.textContent = "全部";
+        all.onclick = () => {
+          activeTag = null;
+          updateActiveChips();
+          render();
+        };
+        chipbar.appendChild(all);
+
+        [...TAGS].sort().forEach((t) => {
+          const b = document.createElement("button");
+          b.className = "chip" + (activeTag === t ? " active" : "");
+          b.textContent = t;
+          b.onclick = () => {
+            activeTag = activeTag === t ? null : t;
+            updateActiveChips();
+            render();
+          };
+          chipbar.appendChild(b);
+        });
+      }
+
+      function updateActiveChips() {
+        chipbar.querySelectorAll(".chip").forEach((ch) => {
+          const isAll = ch.textContent === "全部";
+          const on = (!activeTag && isAll) || activeTag === ch.textContent;
+          ch.classList.toggle("active", on);
+        });
+      }
+
+      function filtered() {
+        const kw = q.value.trim().toLowerCase();
+        return RAW.projects.filter((p) => {
+          if (p.status === "draft") return false;
+          if (activeTag && !(p.tags || []).includes(activeTag)) return false;
+          if (!kw) return true;
+          const bag = [
+            p.title,
+            p.description,
+            (p.tags || []).join(","),
+            (p.tech || []).join(","),
+          ]
+            .join(" ")
+            .toLowerCase();
+          return bag.includes(kw);
+        });
+      }
+
+      function sorted(list) {
+        const mode = sort.value;
+        const s = [...list];
+        switch (mode) {
+          case "updated_asc":
+            s.sort((a, b) => new Date(a.updated_at) - new Date(b.updated_at));
+            break;
+          case "title_asc":
+            s.sort((a, b) => a.title.localeCompare(b.title, "zh-Hant"));
+            break;
+          case "title_desc":
+            s.sort((a, b) => b.title.localeCompare(a.title, "zh-Hant"));
+            break;
+          default:
+            s.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+        }
+        s.sort((a, b) => (b.featured === true) - (a.featured === true));
+        return s;
+      }
+
+      function card(p) {
+        const el = document.createElement("article");
+        el.className = "card";
+
+        const hasThumb = !!p.thumb;
+        const thumbHTML = hasThumb
+          ? `<img class="thumb" alt="${p.title}" src="${
+              p.thumb
+            }" loading="lazy" decoding="async"
+         onerror="this.replaceWith(document.createRange().createContextualFragment(
+           '<div class=&quot;thumb text&quot; style=&quot;background:${gradientFrom(
+             p.id || p.title
+           )}&quot;><span>${initialsFrom(p.title)}</span></div>'
+         ))" />`
+          : `<div class="thumb text" style="background:${gradientFrom(
+              p.id || p.title
+            )}"><span>${initialsFrom(p.title)}</span></div>`;
+
+        el.innerHTML = `
+    ${thumbHTML}
+    <div class="card-body">
+      <h3 class="title">${p.title}</h3>
+      <p class="desc">${p.description || ""}</p>
+      <div class="meta">
+        <span class="badge" title="最後更新">🗓 ${fmtDate(p.updated_at)}</span>
+        ${(p.tech || [])
+          .slice(0, 3)
+          .map((t) => `<span class="tag" title="技術">${t}</span>`)
+          .join("")}
+      </div>
+    </div>
+    <div class="card-foot">
+      <a class="link" href="${
+        p.url
+      }" target="_blank" rel="noopener">前往頁面</a>
+      ${
+        p.repo
+          ? `<a class="link" href="${p.repo}" target="_blank" rel="noopener">GitHub</a>`
+          : ""
+      }
+    </div>
+  `;
+        return el;
+      }
+
+      function render() {
+        const list = sorted(filtered());
+        grid.innerHTML = "";
+        list.forEach((p) => grid.appendChild(card(p)));
+        if (list.length === 0) {
+          const empty = document.createElement("div");
+          empty.style.color = "#6c757d";
+          empty.textContent = "（沒有符合條件的項目）";
+          grid.appendChild(empty);
+        }
+      }
+
+      q.addEventListener("input", () => render());
+      sort.addEventListener("change", () => render());
+      loadProjects();
+    </script>
+  </body>
+</html>
